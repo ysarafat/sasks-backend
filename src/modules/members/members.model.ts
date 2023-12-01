@@ -13,34 +13,47 @@ const memberAddressSchema = new Schema<TMemberAddress>({
   districts: { type: String, required: true },
   postCode: { type: String, required: true },
 });
-const membersSchema = new Schema<TMembers>({
-  name: {
-    type: memberNameSchema,
-    required: true,
+const membersSchema = new Schema<TMembers>(
+  {
+    name: {
+      type: memberNameSchema,
+      required: true,
+    },
+    image: { type: String },
+    email: { type: String, required: true, unique: true },
+    contactNo: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    gender: { type: String, enum: ['male', 'female'], required: true },
+    bloodGroup: {
+      type: String,
+      enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+      required: true,
+    },
+    dateOfBirth: { type: String, required: true },
+    designation: { type: String, required: true },
+    religion: { type: String, required: true },
+    institution: { type: String, required: true },
+    fatherName: { type: String, required: true },
+    motherName: { type: String, required: true },
+    permanentAddress: {
+      type: memberAddressSchema,
+      required: true,
+    },
+    presentAddress: {
+      type: memberAddressSchema,
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
-  image: { type: String },
-  email: { type: String, required: true },
-  contactNo: { type: String, required: true },
-  gender: { type: String, enum: ['male', 'female'], required: true },
-  bloodGroup: {
-    type: String,
-    enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
-    required: true,
+  {
+    timestamps: true,
   },
-  dateOfBirth: { type: String, required: true },
-  designation: { type: String, required: true },
-  religion: { type: String, required: true },
-  institution: { type: String, required: true },
-  fatherName: { type: String, required: true },
-  motherName: { type: String, required: true },
-  permanentAddress: {
-    type: memberAddressSchema,
-    required: true,
-  },
-  presentAddress: {
-    type: memberAddressSchema,
-    required: true,
-  },
-});
+);
 
 export const Members = model<TMembers>('Member', membersSchema);

@@ -35,4 +35,5 @@ export type TMembers = {
   motherName: string;
   permanentAddress: TMemberAddress;
   presentAddress: TMemberAddress;
+  isDeleted: boolean;
 };
