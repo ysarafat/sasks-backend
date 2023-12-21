@@ -14,4 +14,6 @@ export default {
   email_app_password: process.env.EMAIL_APP_PASSWORD,
   sms_api: process.env.SMS_API,
   sms_url: process.env.SMS_URL,
+  jwt_secret: process.env.JWT_SECRET,
+  jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
 };

@@ -6,7 +6,7 @@ import { MemberServices } from './members.services';
 const createMember = catchAsync(async (req, res) => {
   const response = await MemberServices.createMember(req.file, req.body);
   sendResponse(res, {
-    statusCode: 200,
+    statusCode: 201,
     success: true,
     message: 'Member is created successfully',
     data: response,
