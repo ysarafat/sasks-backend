@@ -13,6 +13,7 @@ const memberAddressValidationSchema = z.object({
   upazila: z.string(),
   district: z.string(),
   division: z.string(),
+  country: z.string(),
   postCode: z.string(),
 });
 
