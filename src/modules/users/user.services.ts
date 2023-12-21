@@ -66,4 +66,11 @@ const getAllUser = async (query: any) => {
   const result = await queryUser.modelQuery;
   return result;
 };
-export const UserServices = { registerUser, getAllUser };
+
+// get single user
+const getSingleUser = async (id: string) => {
+  const result = await User.findById(id);
+  return result;
+};
+
+export const UserServices = { registerUser, getAllUser, getSingleUser };

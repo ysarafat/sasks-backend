@@ -20,6 +20,7 @@ const membersSchema = new Schema<TMembers>(
     name: {
       type: memberNameSchema,
       required: true,
+      _id: false,
     },
     image: { type: String },
     email: { type: String, required: true, unique: true },
@@ -44,10 +45,12 @@ const membersSchema = new Schema<TMembers>(
     permanentAddress: {
       type: memberAddressSchema,
       required: true,
+      _id: false,
     },
     presentAddress: {
       type: memberAddressSchema,
       required: true,
+      _id: false,
     },
     isDeleted: {
       type: Boolean,
@@ -56,6 +59,7 @@ const membersSchema = new Schema<TMembers>(
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 

@@ -16,5 +16,6 @@ router.post(
   UsersController.registerUser,
 );
 router.get('/', UsersController.getAllUser);
+router.get('/:id', UsersController.getSingleUser);
 
 export const UserRoutes = router;

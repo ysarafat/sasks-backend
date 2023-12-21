@@ -22,6 +22,7 @@ const userSchema = new Schema<TUser>(
     name: {
       type: userNameSchema,
       required: true,
+      _id: false,
     },
     image: {
       type: String,
@@ -40,6 +41,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
+      select: 0,
     },
     role: {
       type: String,
@@ -63,6 +65,7 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
+    versionKey: false,
   },
 );
 
