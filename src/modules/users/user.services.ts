@@ -1,11 +1,13 @@
 import bcrypt from 'bcrypt';
 import sizeOf from 'image-size';
+import { QueryBuilder } from '../../builder/QueryBuilder';
 import accountRegisterConfirmation from '../../emailTemplate/accountRegisterConfirmation';
 import CustomError from '../../errors/customError';
 import { generateRandomPassword } from '../../utils/generateRandomPassword';
 import { generateUserId } from '../../utils/generateUserId';
 import { sendEmail } from '../../utils/sendEmail';
 import { Clouddinary } from '../../utils/uploadToCloudinary';
+import { searchableFields } from './user.constant';
 import { TUser } from './user.interface';
 import { User } from './user.model';
 // register user
@@ -53,4 +55,15 @@ const registerUser = async (image: any, payload: TUser) => {
   return result;
 };
 
-export const UserServices = { registerUser };
+// get all user
+const getAllUser = async (query: any) => {
+  const queryUser = new QueryBuilder(User.find(), query)
+    .search(searchableFields)
+    .filter()
+    .sort()
+    .paginate()
+    .fields();
+  const result = await queryUser.modelQuery;
+  return result;
+};
+export const UserServices = { registerUser, getAllUser };

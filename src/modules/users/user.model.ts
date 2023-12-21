@@ -56,14 +56,14 @@ const userSchema = new Schema<TUser>(
       type: Boolean,
       default: false,
     },
+    needPasswordChange: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,
   },
 );
 
-// userSchema.pre('save', async function (next) {
-//   this.password = await bcrypt.hash(this.password, 10);
-//   next();
-// });
 export const User = model<TUser>('User', userSchema);

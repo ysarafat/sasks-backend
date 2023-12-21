@@ -12,4 +12,5 @@ export type TUser = {
   status: 'active' | 'blocked';
   image?: string;
   isDeleted: boolean;
+  needPasswordChange: boolean;
 };
