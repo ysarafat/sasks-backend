@@ -12,4 +12,6 @@ export default {
   cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
   email: process.env.EMAIL,
   email_app_password: process.env.EMAIL_APP_PASSWORD,
+  sms_api: process.env.SMS_API,
+  sms_url: process.env.SMS_URL,
 };

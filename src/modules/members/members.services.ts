@@ -1,7 +1,9 @@
 import sizeOf from 'image-size';
-import { addMemberConfirmation } from '../../emailTemplate/AddMemberConfirmation';
+
+import { addMemberConfirmation } from '../../emailTemplate/addMemberConfirmation';
 import CustomError from '../../errors/customError';
 import { sendEmail } from '../../utils/sendEmail';
+import { sendSMS } from '../../utils/sendSMS';
 import { Clouddinary } from '../../utils/uploadToCloudinary';
 import { TMembers } from './members.interface';
 import { Members } from './members.model';
@@ -36,7 +38,10 @@ const createMember = async (image: any, payload: TMembers) => {
     const result = await Members.create(payload);
     const emailSubject = 'Your member profile is published on sasks.org';
     const emailTemplate = addMemberConfirmation(result);
+
     await sendEmail(result?.email, emailSubject, emailTemplate);
+    const smsBody = `Hello ${result?.name?.lastName}, Great news! Your profile information has just been added to sasks.org, We've also sent you an email for confirmation. Kindly check your inbox to ensure your details are accurate. Thank you for being a part of sasks.org! 🚀`;
+    await sendSMS(result.contactNo, smsBody);
     return result;
   }
 };
