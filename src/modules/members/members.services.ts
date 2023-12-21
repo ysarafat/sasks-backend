@@ -1,5 +1,7 @@
 import sizeOf from 'image-size';
+import { addMemberConfirmation } from '../../emailTemplate/AddMemberConfirmation';
 import CustomError from '../../errors/customError';
+import { sendEmail } from '../../utils/sendEmail';
 import { Clouddinary } from '../../utils/uploadToCloudinary';
 import { TMembers } from './members.interface';
 import { Members } from './members.model';
@@ -13,6 +15,7 @@ const createMember = async (image: any, payload: TMembers) => {
   if (dimensions.height !== 500 && dimensions.width !== 500) {
     throw new CustomError(400, 'Image dimensions must be 500x500 or smaller!');
   }
+
   // upload image to cloudDinary
   const clouddinaryFolderName = 'Members-image';
   const clouddinaryFileName =
@@ -31,6 +34,9 @@ const createMember = async (image: any, payload: TMembers) => {
   // return stored data from db
   if (payload.image) {
     const result = await Members.create(payload);
+    const emailSubject = 'Your member profile is published on sasks.org';
+    const emailTemplate = addMemberConfirmation(result);
+    await sendEmail(result?.email, emailSubject, emailTemplate);
     return result;
   }
 };

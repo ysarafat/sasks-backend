@@ -11,7 +11,7 @@ const memberAddressValidationSchema = z.object({
   village: z.string(),
   union: z.string(),
   upazila: z.string(),
-  districts: z.string(),
+  district: z.string(),
   division: z.string(),
   postCode: z.string(),
 });
@@ -25,6 +25,7 @@ const membersValidationSchema = z.object({
   gender: z.enum(['male', 'female']),
   bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
   dateOfBirth: z.string(),
+  degree: z.string(),
   designation: z.string(),
   religion: z.string(),
   institution: z.string(),

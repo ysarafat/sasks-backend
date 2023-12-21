@@ -10,7 +10,7 @@ const memberAddressSchema = new Schema<TMemberAddress>({
   village: { type: String, required: true },
   union: { type: String, required: true },
   upazila: { type: String, required: true },
-  districts: { type: String, required: true },
+  district: { type: String, required: true },
   division: { type: String, required: true },
   postCode: { type: String, required: true },
 });
@@ -36,6 +36,7 @@ const membersSchema = new Schema<TMembers>(
     dateOfBirth: { type: String, required: true },
     designation: { type: String, required: true },
     religion: { type: String, required: true },
+    degree: { type: String, required: true },
     institution: { type: String, required: true },
     fatherName: { type: String, required: true },
     motherName: { type: String, required: true },

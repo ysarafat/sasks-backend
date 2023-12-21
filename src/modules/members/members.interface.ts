@@ -17,7 +17,7 @@ export type TMemberAddress = {
   village: string;
   union: string;
   upazila: string;
-  districts: string;
+  district: string;
   division: string;
   postCode: string;
 };
@@ -31,6 +31,7 @@ export type TMembers = {
   dateOfBirth: string;
   designation: string;
   religion: string;
+  degree: string;
   institution: string;
   fatherName: string;
   motherName: string;
