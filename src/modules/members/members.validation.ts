@@ -12,11 +12,12 @@ const memberAddressValidationSchema = z.object({
   union: z.string(),
   upazila: z.string(),
   districts: z.string(),
+  division: z.string(),
   postCode: z.string(),
 });
 
 // Define Zod main type
-export const membersValidationSchema = z.object({
+const membersValidationSchema = z.object({
   name: memberNameValidationSchema,
   image: z.string().optional(),
   email: z.string().email(),
@@ -32,3 +33,5 @@ export const membersValidationSchema = z.object({
   permanentAddress: memberAddressValidationSchema,
   presentAddress: memberAddressValidationSchema,
 });
+
+export const MemberValidation = { membersValidationSchema };

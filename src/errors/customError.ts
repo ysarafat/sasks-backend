@@ -1,4 +1,4 @@
-class AppError extends Error {
+class CustomError extends Error {
   public statusCode: number;
 
   constructor(statusCode: number, message: string, stack = '') {
@@ -12,4 +12,4 @@ class AppError extends Error {
   }
 }
 
-export default AppError;
+export default CustomError;

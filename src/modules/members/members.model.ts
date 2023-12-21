@@ -11,6 +11,7 @@ const memberAddressSchema = new Schema<TMemberAddress>({
   union: { type: String, required: true },
   upazila: { type: String, required: true },
   districts: { type: String, required: true },
+  division: { type: String, required: true },
   postCode: { type: String, required: true },
 });
 const membersSchema = new Schema<TMembers>(

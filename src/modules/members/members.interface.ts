@@ -18,6 +18,7 @@ export type TMemberAddress = {
   union: string;
   upazila: string;
   districts: string;
+  division: string;
   postCode: string;
 };
 export type TMembers = {
