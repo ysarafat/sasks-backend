@@ -17,5 +17,10 @@ router.post(
 );
 router.get('/', UsersController.getAllUser);
 router.get('/:id', UsersController.getSingleUser);
-
+router.patch(
+  '/:id',
+  requestValidation(UserValidation.updateUserSchemaValidation),
+  UsersController.updateUser,
+);
+router.delete('/:id', UsersController.deleteUser);
 export const UserRoutes = router;

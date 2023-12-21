@@ -13,4 +13,5 @@ export type TUser = {
   image?: string;
   isDeleted: boolean;
   needPasswordChange: boolean;
+  passwordUpdateAt: Date;
 };

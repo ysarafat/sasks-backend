@@ -8,6 +8,13 @@ export class QueryBuilder<T> {
     this.modelQuery = modelQuery;
     this.query = query;
   }
+  // active user
+  isDeleted(isDeleted?: boolean) {
+    this.modelQuery = this.modelQuery.find({
+      isDeleted: isDeleted ? true : false,
+    });
+    return this;
+  }
   // search
   search(searchableFields: string[]) {
     const searchBy = this?.query?.searchBy;

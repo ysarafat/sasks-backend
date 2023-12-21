@@ -58,6 +58,7 @@ const registerUser = async (image: any, payload: TUser) => {
 // get all user
 const getAllUser = async (query: any) => {
   const queryUser = new QueryBuilder(User.find(), query)
+    .isDeleted(false)
     .search(searchableFields)
     .filter()
     .sort()
@@ -73,4 +74,35 @@ const getSingleUser = async (id: string) => {
   return result;
 };
 
-export const UserServices = { registerUser, getAllUser, getSingleUser };
+// update user
+const updateUser = async (id: string, payload: Partial<TUser>) => {
+  const { name, ...other } = payload;
+  const updatedData: Record<string, unknown> = {
+    ...other,
+  };
+  if (name && Object.keys(name).length) {
+    for (const [key, value] of Object.entries(name)) {
+      updatedData[`name.${key}`] = value;
+    }
+  }
+  const result = await User.findByIdAndUpdate(id, updatedData, { new: true });
+  return result;
+};
+
+// delete user
+const deleteUser = async (id: string) => {
+  const result = await User.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
+  return result;
+};
+
+export const UserServices = {
+  registerUser,
+  getAllUser,
+  getSingleUser,
+  updateUser,
+  deleteUser,
+};

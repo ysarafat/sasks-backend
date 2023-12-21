@@ -62,6 +62,10 @@ const userSchema = new Schema<TUser>(
       type: Boolean,
       default: true,
     },
+    passwordUpdateAt: {
+      type: Date,
+      default: new Date(),
+    },
   },
   {
     timestamps: true,
