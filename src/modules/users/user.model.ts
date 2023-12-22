@@ -64,7 +64,6 @@ const userSchema = new Schema<TUser>(
     },
     passwordUpdateAt: {
       type: Date,
-      default: new Date(),
     },
   },
   {

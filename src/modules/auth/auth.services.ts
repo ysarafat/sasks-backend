@@ -4,6 +4,7 @@ import config from '../../config';
 import CustomError from '../../errors/customError';
 import { User } from '../users/user.model';
 import { TAuth } from './auth.interface';
+import { createToken } from './auth.utils';
 // user login
 const login = async (payload: TAuth) => {
   // checking user
@@ -35,11 +36,16 @@ const login = async (payload: TAuth) => {
     role: isUserExist?.role,
   };
   //   send access token and refresh token
-  const accessToken = jwt.sign(jwtPayload, config.jwt_secret!, {
-    expiresIn: '1d',
-  });
+  const accessToken = createToken(jwtPayload, config.jwt_secret!, '1h');
+  const refreshToken = createToken(
+    jwtPayload,
+    config.jwt_refresh_secret!,
+    '120d',
+  );
+
   return {
     accessToken,
+    refreshToken,
     needPasswordChange: isUserExist?.needPasswordChange,
   };
 };
@@ -69,9 +75,59 @@ const changePassword = async (
 
   await User.findOneAndUpdate(
     { userId: user?.userId },
-    { password: hashPassword },
+    {
+      password: hashPassword,
+      needPasswordChange: false,
+      passwordUpdateAt: new Date(),
+    },
   );
 
   return null;
 };
-export const AuthService = { login, changePassword };
+
+// refresh token
+const refreshToken = async (refreshToken: string) => {
+  if (!refreshToken) {
+    throw new CustomError(401, 'Unauthorize request');
+  }
+
+  // decoded refreshToken
+  const decoded = jwt.verify(
+    refreshToken,
+    config.jwt_refresh_secret!,
+  ) as JwtPayload;
+
+  // checking user
+  const isUserValid = await User.findOne({ userId: decoded?.userId });
+  if (!isUserValid) {
+    throw new CustomError(404, 'User not found');
+  }
+  if (isUserValid?.isDeleted) {
+    throw new CustomError(403, "You can't access this resource!");
+  }
+  if (isUserValid?.status === 'blocked') {
+    throw new CustomError(403, 'User is Blocked');
+  }
+
+  // old token invalid after password change
+  const passwordUpdateAt =
+    new Date(isUserValid?.passwordUpdateAt).getTime() / 1000;
+  const tokenIssueAt = decoded?.iat;
+  if (passwordUpdateAt > tokenIssueAt!) {
+    throw new CustomError(401, 'Unauthorize!, Invalid user token');
+  }
+
+  // create access token
+  const jwtPayload = {
+    userId: isUserValid?.userId,
+    role: isUserValid?.role,
+  };
+
+  //   send access token and refresh token
+  const accessToken = createToken(jwtPayload, config.jwt_secret!, '1h');
+
+  return {
+    accessToken,
+  };
+};
+export const AuthService = { login, changePassword, refreshToken };
